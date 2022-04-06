@@ -1,5 +1,4 @@
 package com.example.chatapplication
-
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,15 +10,20 @@ import com.google.firebase.auth.FirebaseAuth
 
 class signup : AppCompatActivity() {
 
+    private var TAG= "signupActivity"
+
     private lateinit var editname: EditText
     private lateinit var editemail : EditText
     private lateinit var password: EditText
     private lateinit var signup: Button
 
     private lateinit var mAuth: FirebaseAuth
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
+
+        mAuth=FirebaseAuth.getInstance()
 
         editname = findViewById(R.id.username)
         editemail=findViewById(R.id.email)
@@ -28,8 +32,8 @@ class signup : AppCompatActivity() {
 
 
         signup.setOnClickListener {
-            val email=editemail.text.toString()
-            val pass=password.text.toString()
+            val email=editemail.text.toString().trim()
+            val pass=password.text.toString().trim()
 
             signup(email,pass)
         }
@@ -44,11 +48,10 @@ class signup : AppCompatActivity() {
                     // Sign in success,
                     val intent = Intent(this,MainActivity::class.java)
                     startActivity(intent)
-
                 } else {
                     // If sign in fails, display a message to the user.
-
                     Toast.makeText(this, "Some error occured ",Toast.LENGTH_SHORT).show()
+                     Log.d(TAG,"excep"+task.exception)
 
                 }
             }
