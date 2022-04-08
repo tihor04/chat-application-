@@ -56,6 +56,7 @@ class signup : AppCompatActivity() {
                         //we first need to add the new user to our database
                             addusertodatabase(name,email,mAuth.currentUser?.uid!! )
                     val intent = Intent(this,MainActivity::class.java)
+                    finish()
                     startActivity(intent)
                 } else {
                     // If sign in fails, display a message to the user.

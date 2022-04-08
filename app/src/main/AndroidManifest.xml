@@ -10,31 +10,28 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ChatApplication">
-
+        <activity
+            android:name=".ChatActivity"
+            android:exported="false" />
         <activity
             android:name=".loginActivity"
             android:exported="true"
             android:theme="@style/Theme.Design.Light.NoActionBar"
             tools:ignore="ExtraText">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>/>
-
+            </intent-filter>
+            />
         </activity>
         <activity
             android:name=".signup"
-            android:theme="@style/Theme.Design.Light.NoActionBar"
-            android:exported="true"/>
-
-
+            android:exported="true"
+            android:theme="@style/Theme.Design.Light.NoActionBar" />
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
     </application>
 
 </manifest>
