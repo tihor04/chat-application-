@@ -1,12 +1,14 @@
 package com.example.chatapplication
 
 import android.content.Context
+import android.content.Intent
 import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
 
 class UserAdapter( val context: Context,val userList:ArrayList<user>,) : RecyclerView.Adapter<userViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): userViewHolder {
@@ -27,6 +29,14 @@ class UserAdapter( val context: Context,val userList:ArrayList<user>,) : Recycle
         val currentuser = userList[position]
 
         holder.textname.text=currentuser.name
+
+        //we need to put an onclick listener on the recycler views as when we click on each item we need to navigate to the chat activity
+        holder.itemView.setOnClickListener{
+            val intent= Intent(context,ChatActivity::class.java)
+            intent.putExtra("name",currentuser.name)
+            intent.putExtra("uid", currentuser.UID)
+            context.startActivity(intent)
+        }
 
 
 

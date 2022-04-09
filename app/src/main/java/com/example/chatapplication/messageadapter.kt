@@ -1,17 +1,35 @@
 package com.example.chatapplication
 
+import android.content.Context
+import android.view.LayoutInflater
 import android.view.TextureView
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.core.Context
+import com.google.firebase.auth.FirebaseAuth
 
-class messageadapter( var context: Context,var messageList:ArrayList<Message>) :RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+class messageadapter(val context : Context, val messageList:ArrayList<Message>) :RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+
+    val ITEM_RECIVED=1
+    val ITEM_SENT=2
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
+        if(viewType==1){
+            //inflate receive
+            val view: View= LayoutInflater.from(context).inflate(R.layout.recivedmessage,parent,false)
+            return recivedViewHolder(view)
+        }
+        else
+        {
+            //inflate sent
+            val view: View= LayoutInflater.from(context).inflate(R.layout.sendlayout,parent,false)
+            return sendViewHolder(view)
+        }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -34,8 +52,22 @@ class messageadapter( var context: Context,var messageList:ArrayList<Message>) :
         }
     }
 
+    // we need to tell the onCreateViewHolder that which view we need to inflate, therefore,we need to override the getItemViewType function
+    // in this function we compare the uid of the current user to the sender/ receiver id
+
+    override fun getItemViewType(position: Int): Int {
+
+        val currentuser= messageList[position]
+
+        if(FirebaseAuth.getInstance().currentUser?.uid.equals(currentuser.senderId)){
+            return ITEM_SENT
+        }
+        else
+            return ITEM_RECIVED
+    }
+
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return messageList.size
     }
 
 
